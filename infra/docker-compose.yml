@@ -1,0 +1,72 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://veris:veris@postgres:5432/veris
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - OTEL_EXPORTER_ENDPOINT=http://otel-collector:4317
+    depends_on:
+      - postgres
+    env_file:
+      - ../backend/.env.example
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: veris
+      POSTGRES_PASSWORD: veris
+      POSTGRES_DB: veris
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3030:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: veris
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.18.0
+    ports:
+      - "5050:5000"
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:///mlruns/mlflow.db
+      --default-artifact-root /mlruns
+    volumes:
+      - mlflow_data:/mlruns
+
+volumes:
+  postgres_data:
+  grafana_data:
+  mlflow_data:

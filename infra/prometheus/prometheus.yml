@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "veris-backend"
+    static_configs:
+      # host.docker.internal = host machine IP from inside Docker Desktop on Windows/Mac
+      # In production (Railway), both backend and prometheus share a network so "backend:8001" works.
+      - targets: ["host.docker.internal:8001"]
+    metrics_path: "/metrics"
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]

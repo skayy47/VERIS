@@ -1,0 +1,56 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment — never commit secrets
+.env
+.env.*
+!.env.example
+!.env.local.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env.local
+frontend/.env.local.*
+!frontend/.env.local.example
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# DVC
+.dvc/tmp/
+.dvc/cache/
+
+# Eval artifacts — large outputs, not for VCS
+backend/eval/results/
+backend/eval/baseline/
+backend/eval/drift/
+backend/eval/output/
+
+# Node
+node_modules/
+.next/
+out/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/settings.json
+
+# Grafana runtime data
+infra/grafana/data/
+
+# Egg
+veris_backend.egg-info/

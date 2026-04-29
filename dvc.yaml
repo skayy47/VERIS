@@ -1,0 +1,27 @@
+stages:
+  bench:
+    cmd: python -m eval.generate_bench
+    deps:
+      - eval/generate_bench.py
+    outs:
+      - eval/data/veris_bench_v1.jsonl
+    wdir: backend
+
+  eval:
+    cmd: python -m eval.run_eval --sample 100 --output eval/results/latest.json
+    deps:
+      - eval/data/veris_bench_v1.jsonl
+      - eval/bench.py
+      - eval/metrics.py
+      - eval/run_eval.py
+    outs:
+      - eval/results/latest.json
+    wdir: backend
+
+  drift:
+    cmd: python -m eval.drift --current eval/results/latest.json --baseline eval/baseline/v1_baseline.jsonl
+    deps:
+      - eval/results/latest.json
+      - eval/drift.py
+      - ops/drift.py
+    wdir: backend

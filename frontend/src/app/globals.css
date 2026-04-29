@@ -1,0 +1,47 @@
+/* Luminal Void design tokens */
+:root {
+  --color-void: #050508;
+  --color-surface: #0d0d14;
+  --color-surface-2: #13131e;
+  --color-accent: #7c3aed;
+  --color-accent-2: #06b6d4;
+  --color-accent-glow: rgba(124, 58, 237, 0.3);
+  --color-text: #e8e8f0;
+  --color-muted: #6b6b80;
+  --color-border: rgba(124, 58, 237, 0.2);
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --radius: 0.5rem;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background-color: var(--color-void);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 2px;
+}
