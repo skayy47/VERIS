@@ -4,7 +4,7 @@
 [![Next.js 14](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Anthropic](https://img.shields.io/badge/LLM-Anthropic%20Claude-blueviolet)](https://www.anthropic.com/)
-[![Eval Gate](https://img.shields.io/badge/CI-eval%20gate-brightgreen)](./github/workflows/eval-gate.yml)
+[![Status](https://img.shields.io/badge/status-in%20progress-orange)](./.github/workflows/eval-gate.yml)
 
 Multi-step AI research agent with grounded citations, a 100-query multilingual eval benchmark, and full production observability. No LangChain. No LangGraph. Pure asyncio state machine.
 
@@ -120,7 +120,7 @@ Results are logged to MLflow automatically when `MLFLOW_TRACKING_URI` is set.
 
 ### CI eval gate
 
-`.github/workflows/eval-gate.yml` runs on every PR. A faithfulness regression >5% blocks the merge. This prevents silent quality degradation from prompt or model changes.
+`.github/workflows/eval-gate.yml` is designed to run on every PR, where a faithfulness regression >5% blocks the merge (not yet proven in CI — see Phase 3 in the roadmap). This prevents silent quality degradation from prompt or model changes.
 
 ### Drift detection
 
